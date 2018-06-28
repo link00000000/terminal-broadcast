@@ -49,3 +49,8 @@ process.stdin.on('data', (data) => {
 	}
 	io.sockets.emit('data', html)
 })
+
+process.on('SIGINT', () => {
+	fs.unlinkSync(outputFileDir)
+	process.exit(1)
+})
