@@ -51,6 +51,8 @@ process.stdin.on('data', (data) => {
 })
 
 process.on('SIGINT', () => {
-	fs.unlinkSync(outputFileDir)
+	if(fs.existsSync(outputFileDir)) {
+		fs.unlinkSync(outputFileDir)
+	}
 	process.exit(1)
 })
