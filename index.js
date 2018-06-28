@@ -26,13 +26,15 @@ app.get('/', (req, res) => {
 })
 
 io.on('connection', (socket) => {
-	let rl = linebyline(outputFileDir)
-	rl.on('line', line => {
-		let html = ansi.toHtml(line)
-		socket.emit('data', html)
-	}).on('error', (err) => {
-		throw err
-	})
+	if(fs.existsSync(outputFileDir)) {
+		let rl = linebyline(outputFileDir)
+		rl.on('line', line => {
+			let html = ansi.toHtml(line)
+			socket.emit('data', html)
+		}).on('error', (err) => {
+			throw err
+		})
+	}
 	console.log('Connection')
 })
 
